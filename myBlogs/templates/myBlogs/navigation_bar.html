@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>BlogSpot</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg " style="background-color: lightslategray;">
+    <a class="navbar-brand px-2" style="font-size: xx-large;" href="#"><i class="bi bi-backpack3-fill"></i></a>
+    <button class="navbar-toggler" type="button" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav" style="margin-right: 40vw;">
+        <li class="nav-item active">
+          <a class="nav-link" href="/home"style="font-size: x-large;">Home<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/blog"style="font-size: x-large;">Blogs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact"style="font-size: x-large;">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/allblogs"style="font-size: x-large;">AllBlogs</a>
+        </li>
+      </ul>
+      
+      {% if user.is_authenticated %}
+      <p class="px-2 mt-2">Welcome <b>{{ user.username }}</b></p>
+        <a class="btn btn-primary" href="{% url 'logoutuser' %}">Logout</a>
+      {% else %}
+      <form class="px-2" action="{% url 'loginuser' %}" methord="get">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">Login</button>
+      </form>
+      <form action="{% url 'signupuser' %}" methord="get">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">Signup</button>
+      </form>
+      {% endif %}
+      <div class="container-fluid">
+        <form class="d-flex" method="post" action="{% url 'find_blog' %}" role="search">
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="blog_search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+ 
+</body>
+</html>
